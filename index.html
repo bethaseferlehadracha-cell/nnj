@@ -127,8 +127,8 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
 /* DRAWER */
 .scrim{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .25s}
 .scrim.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;z-index:101;top:12px;bottom:12px;left:12px;width:min(460px,calc(100vw - 24px));background:var(--surface);border:1px solid var(--line-2);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateX(calc(-100% - 40px));transition:transform .35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;overflow:hidden}
-.drawer.on{transform:none}
+.drawer{position:fixed;z-index:101;top:12px;bottom:12px;left:12px;width:min(460px,calc(100vw - 24px));background:var(--surface);border:1px solid var(--line-2);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.35);transform:translateX(calc(-100% - 40px));transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;visibility:hidden;display:flex;flex-direction:column;overflow:hidden}
+.drawer.on{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .dr-handle{display:none;width:40px;height:5px;border-radius:3px;background:var(--line-2);margin:10px auto 0;flex-shrink:0}
 .drawer.dragging{transition:none}
 .dr-top{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 0}
@@ -153,6 +153,163 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
   .phase-grid{grid-template-columns:1fr 1fr}
   .step span:last-child{display:none}.step{justify-content:center}.step.on span:last-child{display:inline}
 }
+/* HOME: MY TASKS CARD */
+.my-card{width:100%;margin-top:12px;display:flex;align-items:center;gap:18px;text-align:right;padding:18px 22px;border-radius:20px;background:var(--primary);color:var(--on-primary);box-shadow:0 10px 30px rgba(36,83,59,.22);transition:transform .2s}
+.my-card:hover{transform:translateY(-2px)}
+.mc-ic{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.14)}
+.mc-ic svg.i{width:26px;height:26px}
+.mc-ring{position:relative;width:56px;height:56px;flex-shrink:0}
+.mc-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:700}
+.mc-ring .ring-bg{stroke:rgba(255,255,255,.2)}.mc-ring .ring-fg{stroke:#fff}
+.mc-t{flex:1;min-width:0;display:flex;flex-direction:column}
+.mc-t b{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.mc-t span{font-size:13.5px;opacity:.8}
+.mc-go{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);flex-shrink:0}
+
+/* RING */
+.ring{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:7}
+.ring-bg{stroke:var(--line)}
+.ring-fg{stroke:var(--f-week);stroke-linecap:round;transition:stroke-dashoffset .6s cubic-bezier(.4,0,.2,1)}
+
+/* MY TASKS */
+.my-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin:36px 0 18px}
+.my-head h2{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.my-user{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cloud{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--tag-bg);color:var(--muted)}
+.cloud i{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.cloud.on{color:var(--primary)}.cloud.on i{background:#3E9B6C;box-shadow:0 0 0 3px rgba(62,155,108,.18)}
+.cloud.connecting i{background:var(--f-10);animation:pulse 1s infinite alternate}
+.cloud.local{background:#FBF3E6;color:#8A5A14}.cloud.local i{background:#D89A3A}
+@keyframes pulse{to{opacity:.3}}
+.link-btn{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-2)}
+.link-btn:hover{color:var(--text)}
+.link-btn svg.i{width:16px;height:16px}
+.link-btn.danger{color:#B4534A;text-decoration:none}
+
+.sum{display:flex;align-items:center;gap:22px;padding:20px 24px;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+.sum-ring{position:relative;width:84px;height:84px;flex-shrink:0}
+.sum-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:20px;font-weight:800;letter-spacing:-.02em}
+.sum-big{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.sum-row{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:6px}
+.k{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--muted)}
+.k i{width:8px;height:8px;border-radius:50%}
+.k.ok i{background:#3E9B6C}.k.no i{background:#C9665C}.k.op i{background:var(--line-2)}
+
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:22px 0 14px}
+.filters{display:flex;gap:4px;padding:4px;background:var(--surface);border:1px solid var(--line);border-radius:999px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.fl{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;transition:background .15s,color .15s}
+.fl span{font-size:11.5px;font-weight:600;min-width:20px;height:20px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:var(--tag-bg);color:var(--muted)}
+.fl.on{background:var(--primary);color:var(--on-primary)}
+.fl.on span{background:rgba(255,255,255,.18);color:#fff}
+.add-desk{height:44px;font-size:14px;padding:0 20px}
+
+.grps{display:grid;gap:12px}
+.grp{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.grp-h{width:100%;display:grid;grid-template-columns:auto 1fr auto 120px auto;align-items:center;gap:14px;padding:16px 18px;text-align:right}
+.grp-ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--pc);background:color-mix(in srgb,var(--pc) 14%,transparent)}
+.grp-t{display:flex;flex-direction:column;min-width:0}
+.grp-t b{font-size:17px;font-weight:700}
+.grp-t small{font-size:12.5px;color:var(--muted)}
+.grp-n{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+.grp-bar{height:6px;border-radius:6px;background:var(--line);overflow:hidden}
+.grp-bar i{display:block;height:100%;border-radius:6px;background:var(--pc);transition:width .5s}
+.grp-chev{color:var(--faint);transition:transform .25s}
+.grp.col .grp-chev{transform:rotate(-90deg)}
+.grp.col .grp-list{display:none}
+.grp-list{border-top:1px solid var(--line)}
+
+.row{display:flex;align-items:center;gap:10px;padding:6px 10px 6px 14px;border-bottom:1px solid var(--line);transition:background .2s}
+.row-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;text-align:right;padding:10px 8px}
+.row-name{font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap;transition:color .2s}
+.row-meta{display:flex;align-items:center;gap:6px 12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.freq-mini{display:inline-flex;align-items:center;gap:6px}
+.freq-mini i{width:6px;height:6px;border-radius:50%;background:var(--fc)}
+.row-note{display:inline-flex;align-items:center;gap:5px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);opacity:.75}
+.row-note svg.i{width:13px;height:13px}
+.mine{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;background:#E9E5FA;color:#5B4FB0}
+.row.st-done .row-name{color:var(--muted)}
+.row.st-done .row-name::before{content:'';width:6px;height:6px;border-radius:50%;background:#3E9B6C;flex-shrink:0}
+.row.st-no .row-name::before{content:'';width:6px;height:6px;border-radius:50%;background:#C9665C;flex-shrink:0}
+
+.seg{display:inline-flex;flex-shrink:0;gap:2px;padding:3px;border:1px solid var(--line-2);border-radius:999px;background:var(--surface)}
+.sb{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 12px;border-radius:999px;font-size:12.5px;font-weight:500;color:var(--muted);white-space:nowrap;transition:background .18s,color .18s}
+.sb svg.i{width:14px;height:14px;stroke-width:2}
+.sb:hover{color:var(--text);background:var(--surface-2)}
+.sb.ok.on{background:#E4F2EA;color:#1F7A4D}
+.sb.no.on{background:#F7E8E5;color:#A3483F}
+.row-add{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;font-size:13.5px;font-weight:500;color:var(--muted)}
+.row-add:hover{color:var(--primary);background:var(--surface-2)}
+.row-add svg.i{width:16px;height:16px}
+.none{text-align:center;color:var(--muted);padding:40px 0}
+.my-foot{display:flex;justify-content:center;padding:28px 0 60px}
+
+.empty{max-width:420px;margin:72px auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+.empty h3{font-size:26px;font-weight:800}
+.empty p{color:var(--muted);margin-bottom:10px}
+
+/* SHEET FORMS */
+.dr-phase{font-size:13px;font-weight:600;color:var(--pc);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.muted{color:var(--muted)}
+.field{width:100%;font:inherit;font-size:16px;color:var(--text);background:var(--surface-2);border:1.5px solid var(--line-2);border-radius:14px;padding:13px 14px;resize:vertical;outline:none;transition:border-color .15s,box-shadow .15s}
+.field:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(62,122,88,.12)}
+.status-pick{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.spk{display:flex;align-items:center;justify-content:center;gap:8px;height:48px;border-radius:14px;border:1px solid var(--line-2);font-size:15px;font-weight:500;color:var(--muted);transition:all .18s}
+.spk svg.i{width:17px;height:17px;stroke-width:2}
+.spk:hover{background:var(--surface-2);color:var(--text)}
+.spk.ok.on{background:#E4F2EA;border-color:#B9DCC8;color:#1F7A4D}
+.spk.no.on{background:#F7E8E5;border-color:#E9C3BD;color:#A3483F}
+.phase-pick{display:flex;flex-wrap:wrap;gap:6px}
+.pp{height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line-2);font-size:14px;font-weight:500;color:var(--muted)}
+.pp-out{display:inline-flex;align-items:center;gap:6px}
+.pp-out svg.i{width:16px;height:16px}
+.pp.on{border-color:var(--pc);background:color-mix(in srgb,var(--pc) 14%,transparent);color:var(--text);font-weight:600}
+.btn-block{width:100%;justify-content:center;margin-top:24px;height:52px;font-size:16px}
+.btn-danger{border:1.5px solid rgba(210,103,92,.35);color:#B4534A}
+.btn-danger:hover{background:rgba(210,103,92,.08)}
+.dr-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:26px}
+.dr-actions .btn{justify-content:center}
+.form-err{color:#B4534A;font-size:13.5px;min-height:18px;margin-top:10px}
+.chip-btn{cursor:pointer;background:var(--surface-2)}
+.chip-btn:hover{border-color:var(--accent)}
+
+/* FAB + TOAST */
+.fab{position:fixed;z-index:60;left:0;right:0;bottom:0;display:none;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--nav);backdrop-filter:saturate(180%) blur(18px);-webkit-backdrop-filter:saturate(180%) blur(18px);border-top:1px solid var(--line)}
+.fab .btn{width:100%;justify-content:center;height:52px;font-size:16px;box-shadow:0 8px 20px rgba(36,83,59,.25)}
+.toast{position:fixed;z-index:200;left:50%;bottom:calc(28px + env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#14231A;color:#fff;font-size:14px;font-weight:500;padding:12px 20px;border-radius:999px;transition:all .25s;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:560px){
+  .my-card{padding:14px 16px;gap:14px;border-radius:18px}
+  .mc-t b{font-size:17px}.mc-t span{font-size:12.5px}
+  .mc-go{display:none}
+  .my-head{flex-direction:column;align-items:start;gap:10px;margin:22px 0 14px}
+  .sum{padding:16px;gap:16px;border-radius:18px}
+  .sum-ring{width:68px;height:68px}.sum-ring b{font-size:16px}
+  .sum-big{font-size:18px}
+  .k{font-size:12.5px}
+  .toolbar{margin:16px -16px 12px;padding:0 16px}
+  .filters{flex:1}
+  .add-desk{display:none}
+  .fab.on{display:block}
+  .fl{padding:0 10px;gap:5px;font-size:13px}
+  .fl span{min-width:18px;height:18px;font-size:11px;padding:0 5px}
+  .grp{border-radius:18px}
+  .grp-h{grid-template-columns:auto 1fr auto auto;gap:12px;padding:14px}
+  .grp-bar{grid-column:1/-1;grid-row:2}
+  .grp-t small{display:none}
+  .row{padding:4px 8px 4px 10px}
+  .row-main{padding:10px 4px}
+  .row-name{font-size:15px}
+  .seg{padding:3px}
+  .sb{height:34px;padding:0 11px}
+  .sb svg.i{display:none}
+  .my-foot{padding-bottom:30px}
+  #my{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .toast{bottom:calc(96px + env(safe-area-inset-bottom))}
+}
+
 @media(max-width:560px){
   .wrap,.nav-in{padding-inline:16px}
   .nav-in{height:56px}
@@ -232,6 +389,7 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
     <div class="nav-actions">
       <button class="nav-btn" id="nb-home" onclick="showHome()"><svg class="i"><use href="#ic-home"/></svg><span class="lbl">בית</span></button>
       <button class="nav-btn" id="nb-tl" onclick="go(current)"><svg class="i"><use href="#ic-route"/></svg><span class="lbl">ציר המשימות</span></button>
+      <button class="nav-btn" id="nb-my" onclick="showMy()"><svg class="i"><use href="#ic-check-sq"/></svg><span class="lbl">המשימות שלי</span></button>
     </div>
   </div>
 </header>
@@ -253,6 +411,7 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
         <div class="logo-stage"><div class="logo-disc"><img data-logo alt="סמל"></div></div>
       </div>
       <div class="stats" id="stats"></div>
+      <button class="my-card" id="my-card" onclick="showMy()"></button>
       <div class="sec-head" id="phases"><h2>שלבי ההכשרה</h2><p>בחר שלב כדי לראות את המשימות שלו</p></div>
       <div class="phase-grid" id="phase-grid"></div>
     </div>
@@ -268,9 +427,15 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
       <div class="legend" id="legend"></div>
     </div>
   </section>
+  <!-- MY TASKS -->
+  <section class="view" id="my">
+    <div class="wrap" id="my-body"></div>
+  </section>
   <div class="footer">לשימוש פנימי בלבד</div>
 </main>
 
+<div class="fab" id="fab"><button class="btn btn-primary" onclick="openSheet({type:'add'})"><svg class="i"><use href="#ic-plus"/></svg>משימה חדשה</button></div>
+<div class="toast" id="toast" role="status"></div>
 <div class="scrim" id="scrim" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer" role="dialog" aria-modal="true">
   <div class="dr-handle" id="dr-handle"></div>
@@ -301,6 +466,16 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
     <symbol id="ic-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
     <symbol id="ic-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2.5-6 5 12 2.5-6h4"/></symbol>
     <symbol id="ic-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H4.5a3 3 0 0 0 3.5 4M16 6h3.5a3 3 0 0 1-3.5 4M12 13v4M8.5 21h7M10 17h4v4h-4z"/></symbol>
+    <symbol id="ic-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="ic-check-sq" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="ic-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+    <symbol id="ic-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+    <symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+    <symbol id="ic-note" viewBox="0 0 24 24"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/></symbol>
+    <symbol id="ic-chev-d" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="ic-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4h4"/></symbol>
+    <symbol id="ic-inbox" viewBox="0 0 24 24"><path d="M4 13 6.5 5h11L20 13v6H4z"/><path d="M4 13h4.5l1 2.5h5l1-2.5H20"/></symbol>
   </defs>
 </svg>
 
@@ -440,10 +615,11 @@ function renderTimeline(){
 }
 
 function setView(v){
-  document.getElementById('home').classList.toggle('on',v==='home');
-  document.getElementById('timeline').classList.toggle('on',v==='tl');
+  ['home','timeline','my'].forEach(id=>document.getElementById(id).classList.toggle('on',(id==='timeline'?'tl':id)===v));
   document.getElementById('nb-home').classList.toggle('on',v==='home');
   document.getElementById('nb-tl').classList.toggle('on',v==='tl');
+  document.getElementById('nb-my').classList.toggle('on',v==='my');
+  document.getElementById('fab').classList.toggle('on',v==='my'&&!!user);
   window.scrollTo({top:0,behavior:'instant'});
 }
 function centerStep(){
@@ -454,39 +630,37 @@ function centerStep(){
   const r=on.getBoundingClientRect(), pr=sp.getBoundingClientRect();
   sp.scrollBy({left:(r.left+r.width/2)-(pr.left+pr.width/2),behavior:'smooth'});
 }
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 // ─── NAVIGATION (works with the phone's back button) ───────────────────
-// state: {v:'home'} | {v:'tl',i}; an open task sheet adds {dr:[phase,task]}
+// state: {v:'home'} | {v:'tl',i} | {v:'my'}; an open sheet adds {dr:{...}}
+let viewNow='home';
 function apply(st){
   if(st.v==='tl'){
-    const changed=!document.getElementById('timeline').classList.contains('on')||current!==st.i;
+    const changed=viewNow!=='tl'||current!==st.i;
     current=st.i; renderTimeline();
     if(changed){setView('tl');requestAnimationFrame(centerStep);}
-  }else if(!document.getElementById('home').classList.contains('on')){setView('home');}
-  if(st.dr)fillDrawer(st.dr[0],st.dr[1]); else hideDrawer();
+  }else if(st.v==='my'){
+    renderMy(); if(viewNow!=='my')setView('my');
+  }else if(viewNow!=='home'){renderHome();setView('home');}
+  viewNow=st.v||'home';
+  if(st.dr)fillSheet(st.dr); else hideDrawer();
 }
 function nav(st){try{history.pushState(st,'');}catch(e){} apply(st);}
 function showHome(){nav({v:'home'});}
 function go(i){nav({v:'tl',i});}
+function showMy(){nav(user?{v:'my'}:{v:'my',dr:{type:'name'}});}
 window.addEventListener('popstate',e=>apply(e.state||{v:'home'}));
 
-// ─── TASK SHEET ────────────────────────────────────────────────────────
-function openDrawer(pi,ti){nav({v:'tl',i:current,dr:[pi,ti]});}
+// ─── SHEET ─────────────────────────────────────────────────────────────
+function openSheet(dr){nav({v:viewNow,i:current,dr});}
+function openDrawer(pi,ti){openSheet({type:'info',pi,ti});}
 function closeDrawer(){
   if(history.state&&history.state.dr)history.back(); else hideDrawer();
 }
-function fillDrawer(pi,ti){
-  const t=phases[pi].tasks[ti], fq=freqOf(t);
-  const w=t.weeksFn(totalWeeks,prepWeeks);
+function showSheet(html){
   const body=document.getElementById('dr-body');
-  body.innerHTML=`
-    <div class="dr-ic">${ic(t.icon)}</div>
-    <h3>${t.name}</h3>
-    <span class="freq" style="--fc:${fq.c}"><i></i>${fq.text}</span>
-    <div class="dr-sec"><div class="dr-label">מה זה?</div><div class="dr-text">${t.desc}</div></div>
-    <div class="dr-sec"><div class="dr-label">מתי לבצע</div><div class="chips">${w.map(x=>`<span class="chip">${x}</span>`).join('')}</div></div>
-    <div class="dr-sec"><div class="dr-label">מקור</div><div class="src">${ic('book')}${t.source}</div></div>`;
-  body.scrollTop=0;
+  body.innerHTML=html; body.scrollTop=0;
   document.getElementById('scrim').classList.add('on');
   const d=document.getElementById('drawer'); d.style.transform=''; d.classList.add('on');
   document.body.style.overflow='hidden';
@@ -496,6 +670,57 @@ function hideDrawer(){
   const d=document.getElementById('drawer'); d.style.transform=''; d.classList.remove('on');
   document.body.style.overflow='';
 }
+function infoBlocks(t){
+  const w=t.weeksFn(totalWeeks,prepWeeks);
+  return `<div class="dr-sec"><div class="dr-label">מה זה?</div><div class="dr-text">${t.desc}</div></div>
+    <div class="dr-sec"><div class="dr-label">מתי לבצע</div><div class="chips">${w.map(x=>`<span class="chip">${x}</span>`).join('')}</div></div>
+    <div class="dr-sec"><div class="dr-label">מקור</div><div class="src">${ic('book')}${t.source}</div></div>`;
+}
+function fillSheet(dr){
+  if(dr.type==='info'){
+    const t=phases[dr.pi].tasks[dr.ti], fq=freqOf(t);
+    showSheet(`<div class="dr-ic">${ic(t.icon)}</div><h3>${t.name}</h3>
+      <span class="freq" style="--fc:${fq.c}"><i></i>${fq.text}</span>${infoBlocks(t)}`);
+  }else if(dr.type==='task'){
+    const it=itemByKey(dr.key); if(!it){hideDrawer();return;}
+    const st=my.status[it.key]||'';
+    const p=phaseMeta(it.pi);
+    showSheet(`<div class="dr-ic">${ic(it.custom?'doc':it.t.icon)}</div>
+      <div class="dr-phase" style="--pc:${p.c}">${p.title}${it.custom?' · <span class="mine">שלי</span>':''}</div>
+      <h3>${esc(it.name)}</h3>
+      <div class="dr-sec"><div class="dr-label">סטטוס</div>
+        <div class="status-pick" id="sp">
+          <button class="spk ok ${st==='done'?'on':''}" onclick="sheetStatus('${it.key}','done')">${ic('check')}בוצע</button>
+          <button class="spk no ${st==='no'?'on':''}" onclick="sheetStatus('${it.key}','no')">${ic('x')}לא בוצע</button>
+        </div></div>
+      <div class="dr-sec"><div class="dr-label">הערה</div>
+        <textarea class="field" id="note" rows="3" placeholder="לדוגמה: נדחה לשבוע הבא" oninput="noteInput('${it.key}',this.value)">${esc(my.notes[it.key]||'')}</textarea></div>
+      ${it.custom?`<div class="dr-actions"><button class="btn btn-ghost" onclick="openSheet({type:'edit',id:'${it.id}'})">${ic('edit')}עריכה</button><button class="btn btn-danger" onclick="delCustom('${it.id}')">${ic('trash')}מחיקה</button></div>`:infoBlocks(it.t)}`);
+  }else if(dr.type==='add'||dr.type==='edit'){
+    const c=dr.type==='edit'?my.custom.find(x=>x.id===dr.id):null;
+    if(dr.type==='edit'&&!c){hideDrawer();return;}
+    const sel=c?(c.pi>=0?c.pi:-1):(dr.pi!=null?dr.pi:-1);
+    showSheet(`<div class="dr-ic">${ic(c?'edit':'plus')}</div><h3>${c?'עריכת משימה':'משימה חדשה'}</h3>
+      <div class="dr-sec"><div class="dr-label">שם המשימה</div><input class="field" id="f-name" maxlength="80" placeholder="מה צריך לבצע?" value="${c?esc(c.name):''}"></div>
+      <div class="dr-sec"><div class="dr-label">שיוך (לא חובה)</div><div class="phase-pick" id="f-phase">
+        <button class="pp pp-out ${sel<0?'on':''}" style="--pc:${OUTSIDE.c}" data-i="-1" onclick="pickPhase(this)">${ic('inbox')}מחוץ להכשרה</button>
+        ${phases.map((p,i)=>`<button class="pp ${i===sel?'on':''}" style="--pc:${p.c}" data-i="${i}" onclick="pickPhase(this)">${p.title}</button>`).join('')}
+      </div></div>
+      <div class="dr-sec"><div class="dr-label">הערה (לא חובה)</div><textarea class="field" id="f-note" rows="3">${c?esc(my.notes['c-'+c.id]||''):''}</textarea></div>
+      <div class="form-err" id="f-err"></div>
+      <button class="btn btn-primary btn-block" onclick="saveCustom(${c?`'${c.id}'`:'null'})">${c?'שמירת שינויים':'הוספת המשימה'}</button>`);
+    setTimeout(()=>{const f=document.getElementById('f-name'); if(f&&window.innerWidth>560)f.focus();},350);
+  }else if(dr.type==='name'){
+    const recent=lsGet('mm_recent',[]);
+    showSheet(`<div class="dr-ic">${ic('user')}</div><h3>מי הממ"ח?</h3>
+      <p class="dr-text muted">הסימונים נשמרים בענן לפי השם, כך שאפשר להמשיך מכל מכשיר.</p>
+      <div class="dr-sec"><div class="dr-label">שם מלא</div><input class="field" id="f-user" maxlength="40" placeholder="לדוגמה: ישראל ישראלי" value="${esc(user)}" onkeydown="if(event.key==='Enter')setUser()"></div>
+      ${recent.length?`<div class="dr-sec"><div class="dr-label">כניסות אחרונות</div><div class="chips">${recent.map(n=>`<button class="chip chip-btn" onclick="setUser(this.textContent)">${esc(n)}</button>`).join('')}</div></div>`:''}
+      <div class="form-err" id="u-err"></div>
+      <button class="btn btn-primary btn-block" onclick="setUser()">כניסה למשימות שלי</button>`);
+    setTimeout(()=>{const f=document.getElementById('f-user'); if(f&&window.innerWidth>560)f.focus();},350);
+  }
+}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('drawer').classList.contains('on'))closeDrawer();});
 
 // swipe the sheet down to close (phone)
@@ -504,6 +729,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElement
   let y0=null, dy=0;
   d.addEventListener('touchstart',e=>{
     if(window.innerWidth>560)return;
+    if(e.target.closest('input,textarea'))return;
     if(body.contains(e.target)&&body.scrollTop>0)return;
     y0=e.touches[0].clientY; dy=0; d.classList.add('dragging');
   },{passive:true});
@@ -519,9 +745,230 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElement
   });
 })();
 
+// ─── MY TASKS: DATA ────────────────────────────────────────────────────
+function lsGet(k,def){try{const v=localStorage.getItem(k);return v==null?def:JSON.parse(v);}catch(e){return def;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+let user=lsGet('mm_user','');
+let my=loadLocal();
+let filter='all';
+const collapsed=new Set();
+function blank(){return {name:user,status:{},notes:{},custom:[],updatedAt:0};}
+function normalize(d){const b=blank();return {name:d.name||user,status:d.status||{},notes:d.notes||{},custom:Array.isArray(d.custom)?d.custom:[],updatedAt:d.updatedAt||0};}
+function loadLocal(){return user?normalize(lsGet('mm_data_'+user,blank())):blank();}
+const OUTSIDE={title:'מחוץ להכשרה',icon:'inbox',c:'#6E7F96',desc:'משימות אישיות שאינן חלק משלבי ההכשרה'};
+const phaseMeta=pi=>pi<0?OUTSIDE:phases[pi];
+function items(){
+  const out=[];
+  phases.forEach((p,pi)=>{
+    p.tasks.forEach((t,ti)=>out.push({key:`b-${pi}-${ti}`,pi,t,name:t.name,custom:false}));
+    my.custom.filter(c=>c.pi===pi).forEach(c=>out.push({key:'c-'+c.id,id:c.id,pi,name:c.name,custom:true}));
+  });
+  my.custom.filter(c=>!(c.pi>=0&&c.pi<phases.length)).forEach(c=>out.push({key:'c-'+c.id,id:c.id,pi:-1,name:c.name,custom:true}));
+  return out;
+}
+function itemByKey(k){return items().find(x=>x.key===k);}
+function counts(list){
+  const c={total:list.length,done:0,no:0};
+  list.forEach(x=>{const s=my.status[x.key];if(s==='done')c.done++;else if(s==='no')c.no++;});
+  c.open=c.total-c.done-c.no; return c;
+}
+
+let saveT=null;
+function persist(immediate){
+  my.updatedAt=Date.now(); my.name=user;
+  lsSet('mm_data_'+user,my);
+  clearTimeout(saveT);
+  saveT=setTimeout(pushCloud,immediate?0:600);
+}
+function setStatus(key,s){
+  my.status[key]=my.status[key]===s?undefined:s;
+  if(!my.status[key])delete my.status[key];
+  persist(true); renderMy();
+}
+function sheetStatus(key,s){
+  setStatus(key,s);
+  const st=my.status[key]||'';
+  document.querySelectorAll('#sp .spk').forEach(b=>b.classList.toggle('on',(b.classList.contains('ok')&&st==='done')||(b.classList.contains('no')&&st==='no')));
+}
+function noteInput(key,v){
+  if(v.trim())my.notes[key]=v; else delete my.notes[key];
+  persist(false); renderMy();
+}
+function pickPhase(b){document.querySelectorAll('#f-phase .pp').forEach(x=>x.classList.toggle('on',x===b));}
+function saveCustom(id){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-err').textContent='צריך לכתוב שם למשימה';return;}
+  const pi=+document.querySelector('#f-phase .pp.on').dataset.i;
+  const note=document.getElementById('f-note').value.trim();
+  let c=id?my.custom.find(x=>x.id===id):null;
+  if(c){c.name=name;c.pi=pi;}
+  else{c={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name,pi};my.custom.push(c);collapsed.delete(pi);}
+  if(note)my.notes['c-'+c.id]=note; else delete my.notes['c-'+c.id];
+  persist(true); closeDrawer(); renderMy();
+  toast(id?'המשימה עודכנה':'המשימה נוספה');
+}
+function delCustom(id){
+  if(!confirm('למחוק את המשימה?'))return;
+  my.custom=my.custom.filter(x=>x.id!==id);
+  delete my.status['c-'+id]; delete my.notes['c-'+id];
+  persist(true); closeDrawer(); renderMy(); toast('המשימה נמחקה');
+}
+function resetCycle(){
+  if(!confirm('לאפס את כל הסימונים וההערות למחזור חדש?\nהמשימות שהוספת יישארו ברשימה.'))return;
+  my.status={}; my.notes={};
+  persist(true); renderMy(); toast('הסימונים אופסו');
+}
+function setUser(n){
+  const name=(n!=null?n:document.getElementById('f-user').value).trim().replace(/\s+/g,' ');
+  if(!name){document.getElementById('u-err').textContent='צריך לכתוב שם';return;}
+  user=name; lsSet('mm_user',user);
+  lsSet('mm_recent',[user,...lsGet('mm_recent',[]).filter(x=>x!==user)].slice(0,5));
+  my=loadLocal(); subscribe();
+  if(history.state&&history.state.dr){try{history.replaceState({v:'my'},'');}catch(e){}}
+  viewNow='';apply({v:'my'});
+}
+function changeUser(){openSheet({type:'name'});}
+function toggleGrp(pi){collapsed.has(pi)?collapsed.delete(pi):collapsed.add(pi);renderMy();}
+function setFilter(f){filter=f;renderMy();}
+
+let toastT=null;
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),1800);
+}
+
+// ─── MY TASKS: CLOUD (Firebase) ────────────────────────────────────────
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyDGc2Nnf4C-P7FJ5utuexiGF-DqG53eH9Q",
+  authDomain:"management-f690d.firebaseapp.com",
+  projectId:"management-f690d",
+  storageBucket:"management-f690d.firebasestorage.app",
+  messagingSenderId:"728286093733",
+  appId:"1:728286093733:web:5372a56e33338ef572c84c"
+};
+const COL='mamach_tasks';
+let db=null, unsub=null, cloud='connecting';
+function setCloud(s){cloud=s; document.querySelectorAll('.cloud').forEach(el=>{el.className='cloud '+s;el.innerHTML='<i></i>'+cloudText();});}
+function cloudText(){return cloud==='on'?'מחובר לענן':cloud==='connecting'?'מתחבר לענן…':'מצב מקומי · נשמר במכשיר';}
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});}
+async function initCloud(){
+  try{
+    await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js');
+    await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js');
+    firebase.initializeApp(FIREBASE_CONFIG);
+    db=firebase.firestore();
+    if(user)subscribe(); else setCloud('on');
+  }catch(e){console.warn('cloud unavailable',e);setCloud('local');}
+}
+const docRef=()=>db.collection(COL).doc(encodeURIComponent(user));
+function subscribe(){
+  if(unsub){unsub();unsub=null;}
+  if(!db||!user)return;
+  setCloud('connecting');
+  const who=user;
+  unsub=docRef().onSnapshot(snap=>{
+    if(who!==user)return;
+    if(snap.metadata.hasPendingWrites)return;
+    if(!snap.exists){if(my.updatedAt)pushCloud();setCloud('on');return;}
+    const remote=normalize(snap.data());
+    if(remote.updatedAt>my.updatedAt){
+      my=remote; lsSet('mm_data_'+user,my);
+      if(viewNow==='my')renderMy(); else renderHome();
+    }else if(remote.updatedAt<my.updatedAt){pushCloud();}
+    setCloud('on');
+  },err=>{console.warn('cloud error',err);setCloud('local');});
+}
+function pushCloud(){
+  if(!db||!user)return;
+  docRef().set(JSON.parse(JSON.stringify(my))).then(()=>setCloud('on')).catch(e=>{console.warn(e);setCloud('local');});
+}
+
+// ─── MY TASKS: RENDER ──────────────────────────────────────────────────
+function ring(pct){
+  const r=34,c=2*Math.PI*r;
+  return `<svg class="ring" viewBox="0 0 80 80"><circle cx="40" cy="40" r="${r}" class="ring-bg"/><circle cx="40" cy="40" r="${r}" class="ring-fg" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-pct)}"/></svg>`;
+}
+function renderMy(){
+  const el=document.getElementById('my-body');
+  if(!user){
+    el.innerHTML=`<div class="empty"><div class="dr-ic">${ic('user')}</div><h3>המשימות שלי</h3><p>כדי לסמן משימות ולשמור אותן בענן, צריך להיכנס עם השם שלך.</p>
+      <button class="btn btn-primary" onclick="openSheet({type:'name'})">כניסה עם שם</button></div>`;
+    document.getElementById('fab').classList.remove('on');
+    renderHome(); return;
+  }
+  const all=items(), c=counts(all), pct=c.total?c.done/c.total:0;
+  const match=x=>{const s=my.status[x.key]||'';return filter==='all'||(filter==='open'&&!s)||(filter==='done'&&s==='done')||(filter==='no'&&s==='no');};
+  const groups=[...phases.map((_,i)=>i),-1].map(pi=>{
+    const p=phaseMeta(pi);
+    const list=all.filter(x=>x.pi===pi), gc=counts(list), shown=list.filter(match);
+    if(pi<0&&!list.length)return '';
+    if(filter!=='all'&&!shown.length)return '';
+    const rows=shown.map(x=>{
+      const s=my.status[x.key]||'', note=my.notes[x.key];
+      const fq=x.custom?null:freqOf(x.t);
+      return `<div class="row ${s?'st-'+s:''}">
+        <button class="row-main" onclick="openSheet({type:'task',key:'${x.key}'})">
+          <span class="row-name">${esc(x.name)}${x.custom?'<span class="mine">שלי</span>':''}</span>
+          ${fq||note?`<span class="row-meta">${fq?`<span class="freq-mini" style="--fc:${fq.c}"><i></i>${fq.text}</span>`:''}${note?`<span class="row-note">${ic('note')}${esc(note)}</span>`:''}</span>`:''}
+        </button>
+        <div class="seg" role="group" aria-label="סטטוס">
+          <button class="sb ok ${s==='done'?'on':''}" onclick="setStatus('${x.key}','done')" aria-pressed="${s==='done'}">${ic('check')}בוצע</button>
+          <button class="sb no ${s==='no'?'on':''}" onclick="setStatus('${x.key}','no')" aria-pressed="${s==='no'}">${ic('x')}לא בוצע</button>
+        </div>
+      </div>`;
+    }).join('');
+    const col=collapsed.has(pi)&&filter==='all';
+    return `<section class="grp ${col?'col':''}" style="--pc:${p.c}">
+      <button class="grp-h" onclick="toggleGrp(${pi})">
+        <span class="grp-ic">${ic(p.icon)}</span>
+        <span class="grp-t"><b>${p.title}</b><small>${p.desc}</small></span>
+        <span class="grp-n">${gc.done}/${gc.total}</span>
+        <span class="grp-bar"><i style="width:${gc.total?gc.done/gc.total*100:0}%"></i></span>
+        <span class="grp-chev">${ic('chev-d')}</span>
+      </button>
+      <div class="grp-list">${rows}<button class="row-add" onclick="openSheet({type:'add',pi:${pi}})">${ic('plus')}${pi<0?'הוספת משימה':'הוספת משימה לשלב'}</button></div>
+    </section>`;
+  }).join('');
+  const fl=[['all','הכול',c.total],['open','פתוחות',c.open],['done','בוצעו',c.done],['no','לא בוצעו',c.no]];
+  el.innerHTML=`
+    <div class="my-head">
+      <div><div class="ph-kicker" style="--pc:var(--accent)">המשימות שלי</div><h2>${esc(user)}</h2></div>
+      <div class="my-user"><span class="cloud ${cloud}"><i></i>${cloudText()}</span><button class="link-btn" onclick="changeUser()">החלפת משתמש</button></div>
+    </div>
+    <div class="sum">
+      <div class="sum-ring">${ring(pct)}<b>${Math.round(pct*100)}%</b></div>
+      <div class="sum-txt"><div class="sum-big">${c.done} מתוך ${c.total} בוצעו</div>
+        <div class="sum-row"><span class="k ok"><i></i>${c.done} בוצעו</span><span class="k no"><i></i>${c.no} לא בוצעו</span><span class="k op"><i></i>${c.open} פתוחות</span></div>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="filters">${fl.map(([k,l,n])=>`<button class="fl ${filter===k?'on':''}" onclick="setFilter('${k}')">${l}<span>${n}</span></button>`).join('')}</div>
+      <button class="btn btn-primary add-desk" onclick="openSheet({type:'add'})">${ic('plus')}משימה חדשה</button>
+    </div>
+    <div class="grps">${groups||'<div class="none">אין משימות בסינון הזה</div>'}</div>
+    <div class="my-foot"><button class="link-btn danger" onclick="resetCycle()">${ic('reset')}איפוס מחזור</button></div>`;
+  document.getElementById('fab').classList.toggle('on',viewNow==='my'||document.getElementById('my').classList.contains('on'));
+  renderHome();
+}
+
+// ─── HOME: MY TASKS CARD ───────────────────────────────────────────────
+const _renderHomeBase=renderHome;
+renderHome=function(){
+  _renderHomeBase();
+  const box=document.getElementById('my-card'); if(!box)return;
+  if(!user){
+    box.innerHTML=`<div class="mc-ic">${ic('check-sq')}</div><div class="mc-t"><b>המשימות שלי</b><span>סמן מה בוצע בכל שלב, הוסף משימות משלך — נשמר בענן</span></div><span class="mc-go">${ic('arrow')}</span>`;
+    return;
+  }
+  const c=counts(items()), pct=c.total?c.done/c.total:0;
+  box.innerHTML=`<div class="mc-ring">${ring(pct)}<b>${Math.round(pct*100)}%</b></div><div class="mc-t"><b>המשימות שלי</b><span>${esc(user)} · ${c.done} מתוך ${c.total} בוצעו${c.no?` · ${c.no} לא בוצעו`:''}</span></div><span class="mc-go">${ic('arrow')}</span>`;
+};
+
 renderHome();
 try{history.replaceState({v:'home'},'');}catch(e){}
 setView('home');
+initCloud();
+
 </script>
 </body>
 </html>
