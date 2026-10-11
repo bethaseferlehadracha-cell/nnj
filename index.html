@@ -379,6 +379,27 @@ svg.i{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stro
   .pcard:active,.task:active,.btn:active,.step:active{transform:scale(.98)}
   .pcard,.task,.btn,.step{transition:transform .12s,background .15s}
 }
+
+/* CENTERED PERSONAL-AREA DIALOG */
+.drawer.center,.drawer.center.on{top:50%;left:50%;right:auto;bottom:auto;width:min(420px,calc(100vw - 32px));max-height:calc(100vh - 32px);border-radius:24px;border:1px solid var(--line-2)}
+.drawer.center{transform:translate(-50%,-46%) scale(.97);opacity:0;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s,visibility 0s .3s}
+.drawer.center.on{transform:translate(-50%,-50%);opacity:1;transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.drawer.center .dr-handle{display:none}
+.drawer.center .dr-body{padding:0 28px 28px}
+.auth{display:flex;flex-direction:column;align-items:center;text-align:center}
+.auth-ic{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--tag-bg);color:var(--primary);margin-bottom:14px}
+.auth-ic svg.i{width:28px;height:28px}
+.auth h3{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+.auth .dr-text{font-size:14.5px;margin-bottom:22px;max-width:300px}
+.auth .dr-label{align-self:stretch;text-align:center}
+.auth .field{text-align:center;font-size:17px}
+.auth-recent{justify-content:center;margin-top:12px}
+.auth .form-err{text-align:center}
+.auth .btn-block{margin-top:14px}
+@media(max-width:560px){
+  .drawer.center,.drawer.center.on{top:50%;left:50%;right:auto;bottom:auto;width:calc(100vw - 32px);border-radius:24px;border-bottom:1px solid var(--line-2)}
+  .drawer.center .dr-body{padding:0 20px 24px}
+}
 </style>
 </head>
 <body>
@@ -658,7 +679,10 @@ function openDrawer(pi,ti){openSheet({type:'info',pi,ti});}
 function closeDrawer(){
   if(history.state&&history.state.dr)history.back(); else hideDrawer();
 }
-function showSheet(html){
+function showSheet(html,center){
+  const d0=document.getElementById('drawer');
+  if(d0.classList.contains('center')!==!!center&&!d0.classList.contains('on')){d0.style.transition='none';d0.classList.toggle('center',!!center);void d0.offsetWidth;d0.style.transition='';}
+  else d0.classList.toggle('center',!!center);
   const body=document.getElementById('dr-body');
   body.innerHTML=html; body.scrollTop=0;
   document.getElementById('scrim').classList.add('on');
@@ -712,12 +736,16 @@ function fillSheet(dr){
     setTimeout(()=>{const f=document.getElementById('f-name'); if(f&&window.innerWidth>560)f.focus();},350);
   }else if(dr.type==='name'){
     const recent=lsGet('mm_recent',[]);
-    showSheet(`<div class="dr-ic">${ic('user')}</div><h3>מי הממ"ח?</h3>
+    showSheet(`<div class="auth">
+      <div class="auth-ic">${ic('user')}</div>
+      <h3>אזור אישי</h3>
       <p class="dr-text muted">הסימונים נשמרים בענן לפי השם, כך שאפשר להמשיך מכל מכשיר.</p>
-      <div class="dr-sec"><div class="dr-label">שם מלא</div><input class="field" id="f-user" maxlength="40" placeholder="לדוגמה: ישראל ישראלי" value="${esc(user)}" onkeydown="if(event.key==='Enter')setUser()"></div>
-      ${recent.length?`<div class="dr-sec"><div class="dr-label">כניסות אחרונות</div><div class="chips">${recent.map(n=>`<button class="chip chip-btn" onclick="setUser(this.textContent)">${esc(n)}</button>`).join('')}</div></div>`:''}
+      <label class="dr-label" for="f-user">שם</label>
+      <input class="field" id="f-user" maxlength="40" placeholder="שם מלא" value="${esc(user)}" onkeydown="if(event.key==='Enter')setUser()">
+      ${recent.length?`<div class="chips auth-recent">${recent.map(n=>`<button class="chip chip-btn" onclick="setUser(this.textContent)">${esc(n)}</button>`).join('')}</div>`:''}
       <div class="form-err" id="u-err"></div>
-      <button class="btn btn-primary btn-block" onclick="setUser()">כניסה למשימות שלי</button>`);
+      <button class="btn btn-primary btn-block" onclick="setUser()">כניסה</button>
+    </div>`,true);
     setTimeout(()=>{const f=document.getElementById('f-user'); if(f&&window.innerWidth>560)f.focus();},350);
   }
 }
@@ -728,7 +756,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElement
   const d=document.getElementById('drawer'), body=document.getElementById('dr-body');
   let y0=null, dy=0;
   d.addEventListener('touchstart',e=>{
-    if(window.innerWidth>560)return;
+    if(window.innerWidth>560||d.classList.contains('center'))return;
     if(e.target.closest('input,textarea'))return;
     if(body.contains(e.target)&&body.scrollTop>0)return;
     y0=e.touches[0].clientY; dy=0; d.classList.add('dragging');
